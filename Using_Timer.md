@@ -21,8 +21,8 @@ STA	$C0D5	; Set timer value and start counting
 ```
 After completing the necessary processing of envelopes and commands, wait for the next tick:
 ```text
-WAIT	BIT	$C0DD	; Test IFR
-BVC	WAIT	; Count has not yet reached zero
+WAIT BIT	$C0DD	; Test IFR
+     BVC	WAIT	     ; Count has not yet reached zero
 
 By polling in this manner, you can implement tempo control via the timer without requiring significant modifications to the "PERFORM" program.
 
@@ -62,3 +62,26 @@ To disable interrupts, write the following to the VIA's IER register:
 
 To re-enable (restart) them, write:
 `C0DE:C0`
+
+## The issue with "SUGGESTED SPEED" and "TEMPO"  
+
+When playing music files created within the ALF system on a platform other than ALF, there is an issue that must be considered regarding how the playback speed is determined: specifically, how to handle "Suggested Speed" and "TEMPO."  
+
+### Suggested Speed  
+"Suggested Speed" is a one-byte speed parameter specified in most ALF music files. This value corresponds to a setting derived from an Apple II game paddle, with each unit representing 10.7 microseconds.  
+The value typically ranges from approximately 150 to 255; when multiplied by the unit, this results in a duration of 1.6 to 2.7 milliseconds per "tick" of the ALF music.  
+If this parameter is present in a music file, the playback will pause at the start, requiring the user to adjust the game paddle.  
+If this value is set to 0, no pause is inserted, and playback begins immediately, regardless of the state of the game controller.
+
+### TEMPO
+"TEMPO" is a command for the MC16 system that can be used optionally within ALF music files.  
+Like "Suggested Speed," this command alters the duration of a single "tick"; however, while "Suggested Speed" serves merely as an instruction for the user, the "TEMPO" command directly modifies the program's execution.  
+The value is an unsigned 16-bit integer, with each unit representing approximately 0.561 μs.  
+When this command is executed during playback, the PERFORM program applies the effect by overwriting a portion of its own code with the parameter provided by the command.
+
+### VIA's built-in timer  
+The VIA’s built-in timer is a 16-bit counter that uses the Apple II’s system clock (approximately 1.023 MHz) as its primary oscillation source.  
+While it is technically capable of handling settings derived from either paddle values ​​or TEMPO commands, some form of conversion is required to bridge the two.  
+Since this conversion must occasionally take place during actual playback, a pre-computed conversion table is necessary to facilitate the process.  
+Furthermore, additional logic is required—such as reading the "Suggested Speed" before playback begins to configure the timer (thereby bypassing the need for user input) or patching TEMPO commands to automatically trigger the conversion routine.  
+While it is possible to pre-emptively rewrite TEMPO parameters to their converted values—a method I have encountered in existing files—doing so comes at the cost of compatibility with other systems.
