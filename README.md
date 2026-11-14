@@ -38,6 +38,7 @@ This bit allocation is designed to allow for the direct use of the selection val
 PSG control can be performed solely by writing from the VIA to the PSG.
 Notably, the IRQ signal from the VIA is connected to the IRQ lines of the peripheral slots. This allows the VIA’s internal timer to trigger periodic interrupts for an Apple II program that is currently running.
 
+### List of MOS6522(VIA) control registers  
 The 6522 is a functionally enhanced version of the 6821 (PIA); in addition to two I/O ports with handshaking, it includes features such as two timers and a shift register. 
 The control registers of the 6522 are as follows:
 
@@ -59,3 +60,30 @@ The control registers of the 6522 are as follows:
 | $0D | IFR | Interrupt Flag Register | 
 | $0E | IER | Interrupt Enable Register | 
 | $0F | ORA / IRA | Same as Register $01 except no handshake | 
+
+### List of AY-3-8910(PSG) control registers  
+The PSG also contains 16 internal control registers. However, accessing these registers via A2MM requires a two-step process: first, you specify the register, and then you write the data to it. The table below lists the PSG registers.  
+
+| Offset |Register Name | Description / Function (Read / Write) |
+| :--- | :--- | :--- |
+| $00 | Channel A Tone Period (LOW) | 8-Bit Fine Tune A | 
+| $01 | Channel A Tone Period (HIGH) | 4-Bit Coarse Tune A | 
+| $02 | Channel B Tone Period (LOW) | 8-Bit Fine Tune B | 
+| $03 | Channel B Tone Period (HIGH) | 4-Bit Coarse Tune B | 
+| $04 | Channel C Tone Period (LOW) | 8-Bit Fine Tune C | 
+| $05 | Channel C Tone Period (HIGH) | 4-Bit Coarse Tune C | 
+| $06 | Noise Period | 5-Bit Period control | 
+| $07 | /ENABLE | IOA/IOB control, NOISE/TONE Mixer control bits | 
+| $08 | Channel A Amplitude | Envelope, 4-Bit Channel A Amplitude | 
+| $09 | Channel B Amplitude | Envelope, 4-Bit Channel B Amplitude | 
+| $0A | Channel C Amplitude | Envelope, 4-Bit Channel C Amplitude | 
+| $0B | Envelope Period (LOW) | 8-Bit Fine Tune E | 
+| $0C | Envelope Period (HIGH) | 8-Bit Coarse Tune E | 
+| $0D | Envelope Shape Cycle | Envelope Control bits | 
+| $0E | I/O Port A Data Store | 8-Bit Parallel I/O Port A | 
+| $0F | I/O Port B Data Store | 8-Bit Parallel I/O Port B | 
+
+## Additional Resources  
+[MOS 6522 on Wikipedia](https://en.wikipedia.org/wiki/MOS_Technology_6522)  
+[AY-3-8910 on Wikipedia](https://en.wikipedia.org/wiki/General_Instrument_AY-3-8910)  
+
