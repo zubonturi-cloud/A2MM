@@ -81,8 +81,9 @@ The PSG also contains 16 internal control registers. However, accessing these re
 | $0C | Envelope Period (HIGH) | 8-Bit Coarse Tune E | 
 | $0D | Envelope Shape Cycle | Envelope Control bits | 
 | $0E | I/O Port A Data Store | 8-Bit Parallel I/O Port A | 
-| $0F | I/O Port B Data Store | 8-Bit Parallel I/O Port B | 
+| $0F | I/O Port B Data Store | 8-Bit Parallel I/O Port B |  
 Please note that in the GI manual, register numbers are represented in octal.  
+
 ## Additional Resources  
 [MOS 6522 on Wikipedia](https://en.wikipedia.org/wiki/MOS_Technology_6522)  
 [AY-3-8910 on Wikipedia](https://en.wikipedia.org/wiki/General_Instrument_AY-3-8910)  
