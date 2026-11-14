@@ -35,7 +35,7 @@
 951E-   A9 23       LDA   #$23			; Select PSG2, INTAK
 9520-   85 A3       STA   $A3
 9522-   20 28 95    JSR   $9528
-9525-   4C 70 0C    JMP   $0C70
+9525-   4C 70 0C    JMP   $0C70     ; Sets the oscillator volumes to zero for each of three consecutive slots then RTS
 ;
 ; NOISE OFF, TONE ON
 ;
