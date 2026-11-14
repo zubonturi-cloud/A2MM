@@ -23,7 +23,7 @@ After completing the necessary processing of envelopes and commands, wait for th
 ```text
 WAIT BIT	$C0DD	; Test IFR
      BVC	WAIT	     ; Count has not yet reached zero
-
+```
 By polling in this manner, you can implement tempo control via the timer without requiring significant modifications to the "PERFORM" program.
 
 ## Timer1 Free-Run Mode  
