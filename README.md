@@ -33,6 +33,8 @@ For slot numbers `n = 0` through `7`, this memory space consists of 16 bytes beg
 
 On this synthesizer card, a 6522 (VIA) is assigned to this address, and all access to the synthesizer takes place through this VIA. (The PSG is not connected directly to the Apple II bus.)
 An 8-bit internal bus, originating from Port A of the VIA, outputs data to the PSG, while two signals from the lower nibble of Port B (PB0 and PB1) directly control the PSG. Two signals from the upper nibble of Port B (PB4 and PB5) are decoded by a 74LS42 to select one of the three PSGs.
+This bit allocation is designed to allow for the direct use of the selection values—calculated as (slot number, per DEVSEL, multiplied by 16) plus the channel number—since the MC1 oscillator was configured as three separate channels distributed across three slots.  
+
 PSG control can be performed solely by writing from the VIA to the PSG.
 Notably, the IRQ signal from the VIA is connected to the IRQ lines of the peripheral slots. This allows the VIA’s internal timer to trigger periodic interrupts for an Apple II program that is currently running.
 
