@@ -84,7 +84,7 @@ When this command is executed during playback, the PERFORM program applies the e
 
 ### VIA's built-in timer  
 The VIA’s built-in timer is a 16-bit counter that uses the Apple II’s system clock (approximately 1.023 MHz) as its primary oscillation source.  
-While it is technically capable of handling settings derived from either paddle values ​​or TEMPO commands, some form of conversion is required to bridge the two.  
+While it is technically capable of handling settings derived from either paddle values ​​or TEMPO commands, some form of conversion process for the count value is required to bridge the two.  
 Since this conversion must occasionally take place during actual playback, a pre-computed conversion table is necessary to facilitate the process.  
 Furthermore, additional logic is required—such as reading the "Suggested Speed" before playback begins to configure the timer (thereby bypassing the need for user input) or patching TEMPO commands to automatically trigger the conversion routine.  
-While it is possible to pre-emptively rewrite TEMPO parameters to their converted values—a method I have encountered in existing files—doing so comes at the cost of compatibility with other systems.
+While it is possible to pre-emptively rewrite TEMPO parameters to their converted values—a method I have encountered in existing files—doing so comes at the cost of compatibility of that song data with other systems.
