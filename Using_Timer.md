@@ -29,7 +29,7 @@ By polling in this manner, you can implement tempo control via the timer without
 ## Timer1 Free-Run Mode  
 
 If you must use free-run mode, you must enable the T1 interrupt via the IER (Interrupt Enable Register) for it to function correctly.
-
+```text
 LDA	#$FF
 STA	$C0D2	; DDRB OUTPUT
 STA	$C0D3	; DDRA OUTPUT
@@ -48,7 +48,7 @@ The Apple II RAM contains a vector at a specific address where you can set a cal
 03EE:ISRH
 ```
 Within an interrupt service routine (ISR), you must perform only the bare minimum of processing—such as setting a flag—before returning.
-```
+```text
 ISR: PHA
      LDA $C0D4 ; reset IFR
 ;
@@ -57,6 +57,9 @@ ISR: PHA
      PLA
      RTI
 ```
+In this case as well, within the `PERFORM` program—much like in One Shot mode—the approach would involve checking this flag during the polling process that waits for one tick to elapse.  
+
+### Stop and Re-enable interrupt
 To disable interrupts, write the following to the VIA's IER register:
 `C0DE:40`
 
