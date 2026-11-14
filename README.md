@@ -2,7 +2,7 @@
 This is a reproduction of a 9-voice synthesizer card that was widely available in the 1980s as a peripheral card for Apple II clones.  
 Its core components are a 6522 (VIA) and three AY-3-8910 (PSG) chips.  
 The analog circuitry is optimized for the PSG chips manufactured by General Instrument (GI); consequently, it will not function correctly with PSG chips produced by Microchip.  
-While the hardware is compatible with software designed for the "VISTA Music Machine 9," the origins of that software remain unclear.  
+While the hardware is compatible with software designed for the "VISTA Music Machine" the origins of that software remain unclear.  
 However, it is almost certain that the "VISTA" software is a modified version of the software originally developed by ALF.  
 
 ## Features
@@ -12,7 +12,7 @@ At the time, ALF Products had already released a successor, the "MC1," which was
 
 ### Performance Comparison
 
-| Feature / Specification | A2MM (VISTA Music Machine 9) | ALF Products MC16 | ALF Products MC1 |
+| Feature / Specification | A2MM (VISTA Music Machine) | ALF Products MC16 | ALF Products MC1 |
 | :--- | :--- | :--- | :--- |
 | **Sound Chip(s)** | 3× GI AY-3-8910 (PSG) | 3x (i8253 + DAC-76) | 3× TI SN76489 (DCSG) |
 | **Polyphony (per card)** | **9 voices** | 3 voices *(3 cards needed for 9 voices)* | **9 voices** |
