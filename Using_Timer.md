@@ -21,8 +21,8 @@ STA	$C0D5	; Set timer value and start counting
 ```
 After completing the necessary processing of envelopes and commands, wait for the next tick:
 ```text
-WAIT BIT	$C0DD	; Test IFR
-     BVC	WAIT	     ; Count has not yet reached zero
+WAIT BIT	$C0DD     ; Test IFR
+     BVC	WAIT      ; Count has not yet reached zero
 ```
 By polling in this manner, you can implement tempo control via the timer without requiring significant modifications to the "PERFORM" program.
 
@@ -58,6 +58,7 @@ ISR: PHA
      RTI
 ```
 In this case as well, within the `PERFORM` program—much like in One Shot mode—the approach would involve checking this flag during the polling process that waits for one tick to elapse.  
+This method has the advantage that processing delays do not accumulate from one tick to the next. (However, this level of precision might be excessive for this purpose.)
 
 ### Stop and Re-enable interrupt
 To disable interrupts, write the following to the VIA's IER register:
