@@ -23,3 +23,25 @@ At the time, ALF Products had already released a successor, the "MC1," which was
 | **Noise Generator** | 5-bit period selectable | — | **Pitch-tracked noise generator** |
 | **Hardware Timer** | **Yes** *(6522 VIA built-in timer)* | No *(Requires voice reduction for automated playback)* | — |
 | **Overall Positioning** | **Mid-range** *(Balanced polyphony & features)* | **Flagship** *(Superior sound quality & pitch)* | **Cost-effective** *(High polyphony, lower pitch resolution)* |
+
+## Structure
+The Apple II was designed to facilitate the creation of peripheral cards; one such feature is the DEVICE_SELECT(/DEVSEL) signal.
+
+The Apple II’s expansion slots provide a unique `/DEVSEL` signal for each slot, which is used to manage I/O operations on peripheralcards.  
+By utilizing this signal, there is no need for the card itself to decode the upper bits of the address; instead, a 16-byte memory space—determined by the slot number `n` and spanning the range `$C0n0` through `$C0nF`—is made available for controlling the card inserted into that specific slot.  
+For slot numbers `n = 0` through `7`, this memory space consists of 16 bytes beginning at the address `$C080 + n * 16`.
+
+On this synthesizer card, a 6522 (VIA) is assigned to this address, and all access to the synthesizer takes place through this VIA. (The PSG is not connected directly to the Apple II bus.)
+An 8-bit internal bus, originating from Port A of the VIA, outputs data to the PSG, while two signals from the lower nibble of Port B (PB0 and PB1) directly control the PSG. Two signals from the upper nibble of Port B (PB4 and PB5) are decoded by a 74LS42 to select one of the three PSGs.
+PSG control can be performed solely by writing from the VIA to the PSG.
+Notably, the IRQ signal from the VIA is connected to the IRQ lines of the peripheral slots. This allows the VIA’s internal timer to trigger periodic interrupts for an Apple II program that is currently running.
+
+The 6522 is a functionally enhanced version of the 6821 (PIA); in addition to two I/O ports with handshaking, it includes features such as two timers and a shift register. 
+The control registers of the 6522 are as follows:
+• $0 - $1: Port B (ORB/IRB) and Port A (ORA/IRA, with handshake).
+• $2 - $3: Data Direction Registers for Port B (DDRB) and Port A (DDRA) (1 = output, 0 = input).
+• $4 - $7: Timer 1 counters and latches (T1C-L, T1C-H, T1L-L, T1L-H).
+• $8 - $9: Timer 2 low-order byte/counter (T2C-L) and high-order counter (T2C-H).
+• $A - $C: Shift Register (SR), Auxiliary Control Register (ACR), and Peripheral Control Register (PCR).
+• $D - $E: Interrupt Flag Register (IFR) and Interrupt Enable Register (IER).
+• $F: Port A without handshake (ORA/IRA).
