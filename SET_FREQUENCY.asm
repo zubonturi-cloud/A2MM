@@ -14,6 +14,8 @@
 955C-   69 01       ADC   #$01
 955E-   85 A3       STA   $A3			; PSG Chip select + PSG LATCH ADDRESS(INTAK)
 ; Determine the two consecutive PSG register numbers for the oscillator
+;  The PSG's frequency-divider registers are 12 bits wide, and 
+;   there are three sets of two consecutive registers per chip.
 9560-   8A          TXA   
 9561-   29 03       AND   #$03
 9563-   85 A4       STA   $A4
@@ -25,7 +27,7 @@
 956F-   D0 02       BNE   $9573
 9571-   E6 A4       INC   $A4
 9573-   A5 A4       LDA   $A4
-9575-   E6 A4       INC   $A4			; A=0/2/4, A4=1/3/5
+9575-   E6 A4       INC   $A4			  ; A=Reg0/2/4, $A4=Reg1/3/5, based on selected Ch
 9577-   8D D1 C0    STA   $C0D1			;  set to PSG BUS (Port A)
 957A-   A5 A3       LDA   $A3			; PSG Chip select + PSG LATCH ADDRESS(INTAK)
 957C-   8D D0 C0    STA   $C0D0			;  set to PSG Control(Port B)
