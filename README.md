@@ -38,10 +38,22 @@ Notably, the IRQ signal from the VIA is connected to the IRQ lines of the periph
 
 The 6522 is a functionally enhanced version of the 6821 (PIA); in addition to two I/O ports with handshaking, it includes features such as two timers and a shift register. 
 The control registers of the 6522 are as follows:
-• $0 - $1: Port B (ORB/IRB) and Port A (ORA/IRA, with handshake).
-• $2 - $3: Data Direction Registers for Port B (DDRB) and Port A (DDRA) (1 = output, 0 = input).
-• $4 - $7: Timer 1 counters and latches (T1C-L, T1C-H, T1L-L, T1L-H).
-• $8 - $9: Timer 2 low-order byte/counter (T2C-L) and high-order counter (T2C-H).
-• $A - $C: Shift Register (SR), Auxiliary Control Register (ACR), and Peripheral Control Register (PCR).
-• $D - $E: Interrupt Flag Register (IFR) and Interrupt Enable Register (IER).
-• $F: Port A without handshake (ORA/IRA).
+
+| Offset |Register Name | Description / Function (Read / Write) |
+| :--- | :--- | :--- |
+| $00 | ORB / IRB | Output / Input Register B (with handshake) | 
+| $01 | ORA / IRA | Output / Input Register A (with handshake) | 
+| $02 | DDRB | Data Direction Register B (0 = Input, 1 = Output) | 
+| $03 | DDRA | Data Direction Register A (0 = Input, 1 = Output) | 
+| $04 | T1C-L | Timer 1 Low-Order Counter (Read) / Low-Order Latches (Write) | 
+| $05 | T1C-H | Timer 1 High-Order Counter (Read / Write) | 
+| $06 | T1L-L | Timer 1 Low-Order Latches (Read / Write) | 
+| $07 | T1L-H | Timer 1 High-Order Latches (Read / Write) | 
+| $08 | T2C-L | Timer 2 Low-Order Counter (Read) / Low-Order Latches (Write) | 
+| $09 | T2C-H | Timer 2 High-Order Counter (Read / Write) | 
+| $0A | SR | Shift Register (Read / Write) | 
+| $0B | ACR | Auxiliary Control Register (Timer, shift register, and port modes) | 
+| $0C | PCR | Peripheral Control Register (Control line input/output & handshake modes) | 
+| $0D | IFR | Interrupt Flag Register | 
+| $0E | IER | Interrupt Enable Register | 
+| $0F | ORA / IRA | Same as Register $01 except no handshake | 
