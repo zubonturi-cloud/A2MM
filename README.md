@@ -35,8 +35,9 @@ On this synthesizer card, a 6522 (VIA) is assigned to this address, and all acce
 An 8-bit internal bus, originating from Port A of the VIA, outputs data to the PSG, while two signals from the lower nibble of Port B (PB0 and PB1) directly control the PSG. Two signals from the upper nibble of Port B (PB4 and PB5) are decoded by a 74LS42 to select one of the three PSGs.
 At first glance, this bit-assignment scheme might appear unnecessarily complex, as it requires an additional hardware component—an external decoder. However, it is designed to allow the direct use of a "selection value" derived from the formula: (slot number × 16) + channel number. This approach was likely adopted to minimize additional processing overhead by emulating the configuration of the "ALF MC16" system, which utilized three separate synthesizer cards installed in different slots.
 
-PSG control can be performed solely by writing from the VIA to the PSG.
-Notably, the IRQ signal from the VIA is connected to the IRQ lines of the peripheral slots. This allows the VIA’s internal timer to trigger periodic interrupts for an Apple II program that is currently running.
+PSG control can be performed solely by writing from the VIA to the PSG.  
+Notably, the IRQ signal from the VIA is connected to the IRQ lines of the peripheral slots. Because the Apple II—from its system monitor (the equivalent of a modern BIOS) all the way up to its DOS—relies on counting program steps to manage time, it lacks a built-in timer-based interrupt mechanism of the sort found in modern computers.  
+However, this connection allows the VIA’s internal timer to be used to trigger periodic interrupts in an Apple II program—for instance, while that program is actively generating musical tones.
 
 ### List of MOS6522(VIA) control registers  
 The 6522 is a functionally enhanced version of the 6821 (PIA); in addition to two I/O ports with handshaking, it includes features such as two timers and a shift register. 
