@@ -21,8 +21,8 @@ STA	$C0D5	; Set timer value and start counting
 ```
 After completing the necessary processing of envelopes and commands, wait for the next tick:
 ```text
-WAIT BIT	$C0DD     ; Test IFR
-     BVC	WAIT      ; Count has not yet reached zero
+WAIT BIT  $C0DD   ; Test IFR
+     BVC  WAIT    ; Count has not yet reached zero
 ```
 By polling in this manner, you can implement tempo control via the timer without requiring significant modifications to the "PERFORM" program.
 
@@ -85,7 +85,8 @@ When this command is executed during playback, the PERFORM program applies the e
 
 ### VIA's built-in timer  
 The VIA’s built-in timer is a 16-bit counter that uses the Apple II’s system clock (approximately 1.023 MHz) as its primary oscillation source.  
-While it is technically capable of handling settings derived from either paddle values ​​or TEMPO commands, some form of conversion process for the count value is required to bridge the two.  
-Since this conversion must occasionally take place during actual playback, a pre-computed conversion table is necessary to facilitate the process.  
+While it is technically possible to support configurations based on either paddle values ​​or TEMPO commands, bridging the two given their differing time bases requires some form of conversion process to be applied to the count values.
+For the "Suggested Speed" setting, using a pre-calculated conversion table is an appropriate solution; since this conversion only needs to be performed once before playback begins, it is not particularly complex.  
+Conversely, because TEMPO parameter conversions may occur during actual playback, the process must be done as quickly as possible. Furthermore, since TEMPO command parameters are 16 bits wide, they must be converted via calculation rather than by using a lookup table.
+While it is possible to pre-emptively rewrite TEMPO parameters to their converted values—a method I have encountered in existing files—doing so comes at the cost of compatibility of that song data with other systems. That said, depending on one's perspective, this simple approach might be considered the best solution.  
 Furthermore, additional logic is required—such as reading the "Suggested Speed" before playback begins to configure the timer (thereby bypassing the need for user input) or patching TEMPO commands to automatically trigger the conversion routine.  
-While it is possible to pre-emptively rewrite TEMPO parameters to their converted values—a method I have encountered in existing files—doing so comes at the cost of compatibility of that song data with other systems.
