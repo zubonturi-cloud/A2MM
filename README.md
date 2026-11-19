@@ -40,6 +40,15 @@ PSG control can be performed solely by writing from the VIA to the PSG.
 Notably, the IRQ signal from the VIA is connected to the IRQ lines of the peripheral slots. Because the Apple II—from its system monitor (the equivalent of a modern BIOS) all the way up to its DOS—relies on counting program steps to manage time, it lacks a built-in timer-based interrupt mechanism of the sort found in modern computers.  
 However, this connection allows the VIA’s internal timer to be used to trigger periodic interrupts in an Apple II program—for instance, while that program is actively generating musical tones.
 
+### About the code
+Subroutines for Sound-Generating Hardware
+Provided here, for reference, are 6502 assembly language subroutines required to make this hardware function as a music synthesizer:
+* INIT_A2MM.asm: Configures the two I/O ports of the 6522 (VIA) for output and sets register #7 (mixer control) for all three PSGs, disabling noise and enabling tone across all channels.
+* SET_AMPLITUDE.asm: Selects one of the nine channels and sets its output volume (range: 0–255).
+* SET_FREQUENCY: Selects one of the nine channels and sets the 12-bit frequency divisor that determines the output frequency.
+* NOTE_TABLE.asm: A lookup table that converts ALF pitch commands (0–0xBF) into PSG frequency divisor values; it contains 24 elements (covering one octave). These values ​​correspond to the lowest octave; values ​​for higher octaves are obtained by dividing these numbers by 2 (shifting them one bit to the right).
+* Using_Timer.md: Contains tips on utilizing the VIA’s built-in timer to control playback tempo within the ALF `PERFORM` program.
+
 ### List of MOS6522(VIA) control registers  
 The 6522 is a functionally enhanced version of the 6821 (PIA); in addition to two I/O ports with handshaking, it includes features such as two timers and a shift register. 
 The control registers of the 6522 are as follows:
