@@ -46,7 +46,7 @@ Provided here, for reference, are 6502 assembly language subroutines required to
 * INIT_A2MM.asm: Configures the two I/O ports of the 6522 (VIA) for output and sets register #7 (mixer control) for all three PSGs, disabling noise and enabling tone across all channels.
 * SET_AMPLITUDE.asm: Selects one of the nine channels and sets its output volume (range: 0–255).
 * SET_FREQUENCY: Selects one of the nine channels and sets the 12-bit frequency divisor that determines the output frequency.
-* NOTE_TABLE.asm: A lookup table that converts ALF pitch commands (0–0xBF) into PSG frequency divisor values; it contains 24 elements (covering one octave). These values ​​correspond to the lowest octave; values ​​for higher octaves are obtained by dividing these numbers by 2 (shifting them one bit to the right).
+* NOTE_TABLE.asm: A lookup table used to convert ALF pitch commands (0–0xBF) into PSG frequency divisor values. It contains 24 entries (covering one octave), calculated based on the Apple II’s 1.023 MHz system clock. These values ​​correspond to the lowest octave; values ​​for higher octaves can be derived by dividing these numbers by 2 (shifting them one bit to the right).
 * Using_Timer.md: Contains tips on utilizing the VIA’s built-in timer to control playback tempo within the ALF `PERFORM` program.
 
 ### List of MOS6522(VIA) control registers  
