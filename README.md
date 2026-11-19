@@ -40,7 +40,7 @@ PSG control can be performed solely by writing from the VIA to the PSG.
 Notably, the IRQ signal from the VIA is connected to the IRQ lines of the peripheral slots. Because the Apple II—from its system monitor (the equivalent of a modern BIOS) all the way up to its DOS—relies on counting program steps to manage time, it lacks a built-in timer-based interrupt mechanism of the sort found in modern computers.  
 However, this connection allows the VIA’s internal timer to be used to trigger periodic interrupts in an Apple II program—for instance, while that program is actively generating musical tones.
 
-### About the code
+## About the code
 Subroutines for Sound-Generating Hardware
 Provided here, for reference, are 6502 assembly language subroutines required to make this hardware function as a music synthesizer:
 * INIT_A2MM.asm: Configures the two I/O ports of the 6522 (VIA) for output and sets register #7 (mixer control) for all three PSGs, disabling noise and enabling tone across all channels.
